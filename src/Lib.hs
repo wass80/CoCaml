@@ -9,6 +9,9 @@ import Text.Parsec.Combinator
 import Text.Parsec.Char
 import System.IO
 
+someFunc = (+)
+
+{--
 test = (
     "若hoge寧ろ無う。" ++
     "取あ則ろ。" ++
@@ -48,8 +51,8 @@ pApply :: Parser Expr
 pApply = foldl1 Apply <$> many1 (skipSpace pExpr)
 
 pExpr :: Parser Expr
-pExpr = skipSpace $ pLet <|> pFun <|> pIf <|> pLString 
-                 <|> pCall <|> pParen<|> pLIdt
+pExpr = skipSpace $ pLet <|> pIf <|> pLString
+                 <|> pCall <|> pParen<|> pLIdt <|> pNext
 
 pLIdt = LIdt <$> pIdt
 
@@ -57,49 +60,44 @@ pLString :: Parser Expr
 pLString = between (char '「') (char '」')
            (liftA LString $ many $ noneOf "」")
 
-pCall = Call <$> (char '呼' *> pApply)
+pCall = Call <$> (char '呼' *> pExpr)
 
 pIf = do
-  char '若'; c <- pApply
-  char '寧'; t <- pApply
-  char '無'; f <- pApply
+  char '若'; c <- pExpr
+  char '寧'; t <- pExpr
+  char '無'; f <- pExpr
   return $ If c t f
 
 pNonRecLet = do
   char '以'; i <- many1 pIdt
-  char '為'; f <- pApply
-  char '如'; e <- pNext
+  char '為'; f <- pExpr
+  char '如'; e <- pExpr
   return $ Let NonRec i f e
 
 pRecLet = do
   char '以'; char '再'; i <- many1 pIdt
-  char '為'; f <- pApply
-  char '如'; e <- pApply
+  char '為'; f <- pExpr
+  char '如'; e <- pExpr
   return $ Let Rec i f e
 
 pLet = try pRecLet <|> pNonRecLet
 
-pFun = do
-  char '取'; i <- pIdt
-  char '則'; e <- pApply
-  return $ Fun i e
-
-pParen = char '何' *> pNext <* char '也'
+pParen = char '何' *> pExpr <* char '也'
 
 pNonRecDef = do
   char '定'; i <- many1 pIdt
-  char '為'; e <- pNext
+  char '為'; e <- pExpr
   return $ Def NonRec i e
 
 pRecDef = do
   char '定'; char '再'; i <- many1 pIdt
-  char '為'; e <- pNext
+  char '為'; e <- pExpr
   return $ Def Rec i e
 
 pDef = try pRecDef <|> pNonRecDef
 
 pSent :: Parser Sent
-pSent = pDef <|> (Sent <$> skipSpace pNext)
+pSent = pDef <|> (Sent <$> skipSpace pExpr)
 
 pProg :: Parser Prog
 pProg = many $ skipSpace pSent <* char '。' <* many space
@@ -134,32 +132,4 @@ bIdts [] = ""
 
 bIdt :: Idt -> String
 bIdt (Idt c) = c
-
-type Prog = [Sent]
-
-data IsRec = Rec | NonRec deriving (Show, Eq)
-
-data Sent
-  = Def IsRec [Idt] Expr
-  | Sent Expr
-  deriving (Show, Eq)
-
-data Expr
-  = Let IsRec [Idt] Expr Expr
-  | Fun Idt Expr
-  | If Expr Expr Expr
-  | Match Expr Expr Expr
-  | LChar Char
-  | LString String
-  | LList [Expr]
-  | LIdt Idt
-  | Next Expr Expr
-  | Apply Expr Expr
-  | Number Integer
-  | Call Expr
-  | Nil
-  deriving (Show, Eq)
-
-data Idt = Idt String
-  deriving (Show, Eq)
-
+--}
