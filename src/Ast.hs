@@ -29,13 +29,14 @@ data Idt = Idt String
 
 {--
 
-<program> = <sentence> +
+<program> = <sentence>+
 
 <sentence> ::=
-  '定' '再'? <idt>+ '為' <expr> 。|
-  <expr> 。
+  <space>* '定' <space>* '再'? <idt>+ '為' <expr> 。<space>* |
+  <expr> 。<space>*
 
-<expr> ::=
+<expr> ::= <space>* <expr'> <space>*
+<expr'> ::=
   '以' '再'? <idt>+ '為' <expr> '如' <expr> |
   '若' <expr> '寧' <expr> '無' <expr> |
   '字' <char> |
@@ -47,9 +48,9 @@ data Idt = Idt String
   <idt> |
   <pipe>
 
-<pipe> =  <call> (、 <call>)+
+<pipe> =  <apply> (、 <apply>)+
 <apply> =  <expr> (<expr>)+
 
-<idt> ::= <char> (- <char>)* | <idt> 之 <idt>
+<idt> ::= <alpha> <char> (- <char>)* | <idt> 之 <idt>
 
 --}
