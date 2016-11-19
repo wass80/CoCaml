@@ -14,9 +14,6 @@ parse program = Text.Parsec.parse prog "" program
 prog :: Parser Ast.Prog
 prog = return []
 
-skipSpace :: Parser a -> Parser a
-skipSpace p = many space *> p <* many space
-
 alphas :: Parser Char
 alphas = oneOf $ ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "'_()+-="
 
@@ -24,8 +21,19 @@ regchars :: [Char]
 regchars = "　 、。也為如若寧無呼取何也以定「」"
 
 tokenList :: Parser String
-tokenList = skipSpace (noneOf regchars) `sepBy` char '-'
+tokenList = (spaces *> noneOf regchars <* spaces )`sepBy1` char '-'
 
 token :: Parser String
-token = skipSpace $ (many1 alphas <|>  tokenList)
+token = spaces *>  (many1 alphas <|> tokenList) <* spaces
 
+idt :: Parser Idt
+idt = Idt <$> token
+
+lidt :: Parser Expr
+lidt = LIdt <$> idt
+
+apply :: Parser Expr
+apply = foldl1 Apply <$> many1 lidt
+
+expr :: Parser Expr
+expr = lidt

@@ -5,6 +5,7 @@ import Test.Hspec.QuickCheck (prop)
 import Test.QuickCheck
 
 import Parser
+import Ast
 
 import qualified Text.Parsec as Parsec
 import Text.Parsec.String (Parser)
@@ -27,3 +28,11 @@ spec = do
     prop "文字" $ ptest token " 文字 " "文"
     prop "文 - 字" $ ptest token " 文 - 字 " "文字"
     prop "文-字 - 列 " $ ptest token " 文-字 - 列 " "文字列"
+  describe "idt" $ do
+    prop "文字" $ ptest idt " 文字 " (Idt "文")
+  describe "lidt" $ do
+    prop "文字" $ ptest lidt " 文字 " (LIdt $ Idt "文")
+  describe "apply" $ do
+    prop "文" $ ptest apply " 文 " (LIdt $ Idt "文") 
+    prop "文字" $ ptest apply " 文字 "
+      (Apply (LIdt $ Idt "文") (LIdt $ Idt "字"))
