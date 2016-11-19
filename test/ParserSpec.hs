@@ -52,3 +52,8 @@ spec = do
     testParser llet "以再 a b 為 c d 如 e、f"
       (Let Rec (Idt "a") [Idt "b"]
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
+  describe "sent" $ do
+    testParser sent "a b。" (Sent (Apply (i "a") (i "b")))
+  describe "prog" $ do
+    testParser prog "a b。あ。"
+      [Sent (Apply (i "a") (i "b")), Sent (i "あ")]

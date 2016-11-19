@@ -11,9 +11,6 @@ import Text.Parsec.Char
 parse :: String -> Either ParseError Prog
 parse program = Text.Parsec.parse prog "" program
 
-prog :: Parser Ast.Prog
-prog = return []
-
 alphas :: Parser Char
 alphas = oneOf $ ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "'_()+-="
 
@@ -58,3 +55,9 @@ llet = do
 
 expr :: Parser Expr
 expr =  llet <|> pipe
+
+sent :: Parser Sent
+sent = Sent <$> expr <* spaces <*  char '。'
+
+prog :: Parser Prog
+prog = many sent
