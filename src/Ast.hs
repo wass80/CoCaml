@@ -21,6 +21,7 @@ data Expr
   | Apply Expr Expr
   | Number Integer
   | Call Expr
+  | Next Expr
   | Nil
   deriving (Show, Eq)
 
@@ -45,6 +46,7 @@ data Idt = Idt String
   <number> |
   呼 <expr> |
   何 <expr> 也 |
+  次 <expr> |
   <idt> |
   <pipe>
 

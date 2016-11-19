@@ -33,7 +33,10 @@ lidt :: Parser Expr
 lidt = LIdt <$> idt
 
 apply :: Parser Expr
-apply = foldl1 Apply <$> many1 lidt
+apply = foldl1 Apply <$> many1 expr
+
+pipe :: Parser Expr
+pipe = foldl1 Pipe <$> apply `sepBy1` char '、'
 
 expr :: Parser Expr
 expr = lidt

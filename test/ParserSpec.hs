@@ -36,3 +36,9 @@ spec = do
     prop "文" $ ptest apply " 文 " (LIdt $ Idt "文") 
     prop "文字" $ ptest apply " 文字 "
       (Apply (LIdt $ Idt "文") (LIdt $ Idt "字"))
+  describe "pipe" $ do
+    prop "文、字" $ ptest pipe " 文、字 "
+      (Pipe (LIdt $ Idt "文") (LIdt $ Idt "字"))
+    prop "a 、f b" $ ptest pipe " a 、f b "
+      (Pipe (LIdt $ Idt "a") (Apply (LIdt $ Idt "f") (LIdt $ Idt "b")))
+
