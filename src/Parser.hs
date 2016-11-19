@@ -32,11 +32,29 @@ idt = Idt <$> token
 lidt :: Parser Expr
 lidt = LIdt <$> idt
 
+atom :: Parser Expr
+atom = lidt
+
 apply :: Parser Expr
-apply = foldl1 Apply <$> many1 expr
+apply = foldl Apply <$> atom <*> many expr
 
 pipe :: Parser Expr
 pipe = foldl1 Pipe <$> apply `sepBy1` char '、'
 
+rec :: Parser IsRec
+rec = option NonRec $ (char '再' *> return Rec)
+
+llet :: Parser Expr
+llet = do
+  char '以'
+  r <- rec
+  f <- idt
+  args <- many idt
+  char '為'
+  val <- pipe
+  char '如'
+  e <- pipe
+  return $ Let r f args val e
+
 expr :: Parser Expr
-expr = lidt
+expr =  llet <|> pipe

@@ -10,7 +10,7 @@ data Sent
   deriving (Show, Eq)
 
 data Expr
-  = Let IsRec [Idt] Expr Expr
+  = Let IsRec Idt [Idt] Expr Expr
   | Fun Idt Expr
   | If Expr Expr Expr
   | LChar Char
@@ -38,20 +38,20 @@ data Idt = Idt String
 
 <expr> ::= <space>* <expr'> <space>*
 <expr'> ::=
-  '以' '再'? <idt>+ '為' <expr> '如' <expr> |
-  '若' <expr> '寧' <expr> '無' <expr> |
-  '字' <char> |
+  '以' '再'? <idt>+ '為' <pipe> '如' <pipe> |
+  '若' <pipe> '寧' <pipe> '無' <pipe> |
+  '字' <pipe> |
   (並 <expr>)+ 空 |
   「 <string> 」|
   <number> |
   呼 <expr> |
-  何 <expr> 也 |
   次 <expr> |
-  <idt> |
+  <atom> |
   <pipe>
 
-<pipe> =  <apply> (、 <apply>)+
-<apply> =  <expr> (<expr>)+
+<pipe> ::= <apply> (、 <apply>)+
+<apply> ::= <atom> (<expr>)+
+<atom> :: = <idt> | 何 <expr> 也
 
 <idt> ::= <alpha> <char> (- <char>)* | <idt> 之 <idt>
 

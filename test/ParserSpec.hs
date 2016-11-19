@@ -20,6 +20,9 @@ ptest p s x = case (Parsec.parse p "" s) of
 
 testParser p s x = it s $ ptest p s x
 
+i :: String -> Expr
+i s = LIdt $ Idt s
+
 spec = do
   describe "parser" $ do
     it "empty" $ parse "" == Right []
@@ -32,8 +35,6 @@ spec = do
     testParser token " 文-字 - 列 " "文字列"
   describe "idt" $ do
     testParser idt " 文字 " (Idt "文")
-  describe "lidt" $ do
-    testParser lidt " 文字 " (LIdt $ Idt "文")
   describe "apply" $ do
     testParser apply " 文 " (LIdt $ Idt "文")
     testParser apply " 文字 "
@@ -43,3 +44,11 @@ spec = do
       (Pipe (LIdt $ Idt "文") (LIdt $ Idt "字"))
     testParser pipe " a 、f b "
       (Pipe (LIdt $ Idt "a") (Apply (LIdt $ Idt "f") (LIdt $ Idt "b")))
+  describe "lidt" $ do
+    testParser lidt " 文字 " (LIdt $ Idt "文")
+  describe "llet" $ do
+    testParser llet "以 a b 為 c 如 d"
+      (Let NonRec (Idt "a") [Idt "b"] (i "c") (i "d"))
+    testParser llet "以再 a b 為 c d 如 e、f"
+      (Let Rec (Idt "a") [Idt "b"]
+        (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
