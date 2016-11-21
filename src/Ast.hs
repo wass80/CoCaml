@@ -36,8 +36,11 @@ data Idt = Idt String
   <space>* '定' <space>* '再'? <idt>+ '為' <expr> 。<space>* |
   <expr> 。<space>*
 
-<expr> ::= <space>* <expr'> <space>*
-<expr'> ::=
+<expr> ::= <pipe>
+
+<pipe> ::= <apply> (、 <apply>)+
+<apply> ::= <atom> (<expr>)+
+<atom> :: = 
   '以' '再'? <idt>+ '為' <pipe> '如' <pipe> |
   '若' <pipe> '寧' <pipe> '無' <pipe> |
   '字' <pipe> |
@@ -46,12 +49,8 @@ data Idt = Idt String
   <number> |
   呼 <expr> |
   次 <expr> |
-  <atom> |
-  <pipe>
-
-<pipe> ::= <apply> (、 <apply>)+
-<apply> ::= <atom> (<expr>)+
-<atom> :: = <idt> | 何 <expr> 也
+  <idt> |
+  何 <expr> 也
 
 <idt> ::= <alpha> <char> (- <char>)* | <idt> 之 <idt>
 

@@ -36,16 +36,16 @@ spec = do
   describe "idt" $ do
     testParser idt " 文字 " (Idt "文")
   describe "apply" $ do
-    testParser apply " 文 " (LIdt $ Idt "文")
-    testParser apply " 文字 "
-      (Apply (LIdt $ Idt "文") (LIdt $ Idt "字"))
+    testParser apply " 文 " (i "文")
+    testParser apply " f a b "
+      (Apply (Apply (i "f") (i "a")) (i "b"))
   describe "pipe" $ do
-    testParser pipe " 文、字 "
-      (Pipe (LIdt $ Idt "文") (LIdt $ Idt "字"))
+    testParser pipe " a、b 、c "
+      (Pipe (Pipe (i "a") (i "b")) (i "c"))
     testParser pipe " a 、f b "
-      (Pipe (LIdt $ Idt "a") (Apply (LIdt $ Idt "f") (LIdt $ Idt "b")))
+      (Pipe (i "a") (Apply (i "f") (i "b")))
   describe "lidt" $ do
-    testParser lidt " 文字 " (LIdt $ Idt "文")
+    testParser lidt " 文字 " (i "文")
   describe "llet" $ do
     testParser llet "以 a b 為 c 如 d"
       (Let NonRec (Idt "a") [Idt "b"] (i "c") (i "d"))
