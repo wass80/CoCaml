@@ -18,6 +18,9 @@ i s = LIdt $ Idt s
 spec =
   describe "idt" $ do
     testExpr "u25991" (i "文")
+    testExpr "u25991u23383" (i "文字")
+    testExpr "aiu" (i "aiu")
+
 {--
   describe "apply" $ do
     testExp (Apply (i "文"))  "文"
