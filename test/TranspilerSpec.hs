@@ -10,38 +10,30 @@ import Transpiler
 main :: IO ()
 main = hspec spec
 
-testExpr e a = it e (transExpr a == e)
+testTrans f e a = it e (f a == e)
+testExpr = testTrans expr
 
 i :: String -> Expr
-i s = LIdt $ Idt s
+i = LIdt . Idt
 
-spec =
-  describe "idt" $ do
+spec = do
+  describe "apply" $ do
+    testExpr "((a b) c)" (Apply (Apply (i "a") (i "b")) (i "c"))
+  describe "pipe" $ do
+    testExpr "(a |> (f b))"
+      (Pipe (LIdt $ Idt "a") (Apply (LIdt $ Idt "f") (LIdt $ Idt "b")))
+  describe "lidt" $ do
     testExpr "u25991" (i "文")
     testExpr "u25991u23383" (i "文字")
     testExpr "aiu" (i "aiu")
-
-{--
-  describe "apply" $ do
-    testExp (Apply (i "文"))  "文"
-    testParser (Apply (i "文") (Apply (i "字") (i "列"))
-      (Apply (LIdt $ Idt "文") (LIdt $ Idt "字"))
-  describe "pipe" $ do
-    testParser pipe " 文、字 "
-      (Pipe (LIdt $ Idt "文") (LIdt $ Idt "字"))
-    testParser pipe " a 、f b "
-      (Pipe (LIdt $ Idt "a") (Apply (LIdt $ Idt "f") (LIdt $ Idt "b")))
-  describe "lidt" $ do
-    testParser lidt " 文字 " (LIdt $ Idt "文")
   describe "llet" $ do
-    testParser llet "以 a b 為 c 如 d"
+    testExpr "(let a b = c in d)"
       (Let NonRec (Idt "a") [Idt "b"] (i "c") (i "d"))
-    testParser llet "以再 a b 為 c d 如 e、f"
-      (Let Rec (Idt "a") [Idt "b"]
+    testExpr "(let rec a b c = (c d) in (e |> f))"
+      (Let Rec (Idt "a") [Idt "b", Idt "c"]
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
   describe "sent" $ do
-    testParser sent "a b。" (Sent (Apply (i "a") (i "b")))
+    testTrans sent "(a b);;\n" (Sent (Apply (i "a") (i "b")))
   describe "prog" $ do
-    testParser prog "a b。あ。"
-      [Sent (Apply (i "a") (i "b")), Sent (i "あ")]
-      --}
+    testTrans prog "(a b);;\na;;\n"
+      [Sent (Apply (i "a") (i "b")), Sent (i "a")]

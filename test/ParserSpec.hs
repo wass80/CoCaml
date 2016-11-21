@@ -21,7 +21,7 @@ ptest p s x = case (Parsec.parse p "" s) of
 testParser p s x = it s $ ptest p s x
 
 i :: String -> Expr
-i s = LIdt $ Idt s
+i = LIdt . Idt
 
 spec = do
   describe "parser" $ do
