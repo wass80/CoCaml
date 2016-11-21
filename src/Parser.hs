@@ -11,17 +11,11 @@ import Text.Parsec.Char
 parse :: String -> Either ParseError Prog
 parse program = Text.Parsec.parse prog "" program
 
-alphas :: Parser Char
-alphas = oneOf $ ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "'_()+-="
-
-regchars :: [Char]
-regchars = "　 、。也為如若寧無呼取何也以定「」"
-
 tokenList :: Parser String
 tokenList = (spaces *> noneOf regchars <* spaces )`sepBy1` char '-'
 
 token :: Parser String
-token = spaces *>  (many1 alphas <|> tokenList) <* spaces
+token = spaces *>  (many1 (oneOf alphas) <|> tokenList) <* spaces
 
 idt :: Parser Idt
 idt = Idt <$> token

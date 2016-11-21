@@ -25,9 +25,13 @@ data Expr
   | Nil
   deriving (Show, Eq)
 
-data Idt = Idt String
-  deriving (Show, Eq)
+data Idt = Idt String deriving (Show, Eq)
 
+alphas :: [Char]
+alphas = ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "'_()+-="
+
+regchars :: [Char]
+regchars = "　 、。也為如若寧無呼取何也以定「」"
 {--
 
 <program> = <sentence>+

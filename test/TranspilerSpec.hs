@@ -10,17 +10,15 @@ import Transpiler
 main :: IO ()
 main = hspec spec
 
--- testExpr a s = it s expr (a == s)
+testExpr e a = it e (transExpr a == e)
 
 i :: String -> Expr
 i s = LIdt $ Idt s
 
 spec =
   describe "idt" $ do
-    it "dummy" True
+    testExpr "u25991" (i "文")
 {--
-  describe "idt" $ do
-    testExpr (i "文") "文"
   describe "apply" $ do
     testExp (Apply (i "文"))  "文"
     testParser (Apply (i "文") (Apply (i "字") (i "列"))
