@@ -1,6 +1,6 @@
 # 孔Caml
 
-[https://wass80.github.io/CoCaml/docs/](Demo)
+[Demo](https://wass80.github.io/CoCaml/docs/)
 
 漢文ベース関数型プログラミング言語です。
 OCamlの構文です。
@@ -11,7 +11,7 @@ OCamlの構文です。
 
 # Grammer
 
-[https://github.com/wass80/CoCaml/blob/master/src/Ast.hs](AST + BNF)
+[AST + BNF](./src/AST.hs)
 
 # Requirements
 
