@@ -24,7 +24,7 @@ lidt :: Parser Expr
 lidt = LIdt <$> idt
 
 rec :: Parser IsRec
-rec = option NonRec $ (char '再' *> return Rec)
+rec = option NonRec $ (try (many space *> char '再') *> return Rec)
 
 llet :: Parser Expr
 llet = do
@@ -53,5 +53,19 @@ expr = pipe
 sent :: Parser Sent
 sent = Sent <$> expr <* spaces <*  char '。'
 
+def :: Parser Sent
+def = do
+  many space
+  char '定'
+  r <- rec
+  f <- idt
+  args <- many idt
+  many space
+  char '為'
+  val <- pipe
+  many space
+  char '。'
+  return $ Def r f args val
+
 prog :: Parser Prog
-prog = many (try sent) <* spaces
+prog = many (try sent <|> try def) <* spaces

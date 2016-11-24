@@ -18,17 +18,22 @@ idt (Idt idt@(s:_))
 args :: [Idt] -> String
 args = intercalate " " . map idt
 
+rec :: IsRec -> String
+rec Rec = " rec"
+rec NonRec = ""
+
 expr :: Expr -> String
 expr (LIdt i) = idt i
 expr (Apply f a) = "(" ++ expr f ++ " " ++ expr a ++ ")"
 expr (Pipe a b) = "(" ++ expr a ++ " |> " ++ expr b ++ ")"
-expr (Let Rec a b c d) =
-  "(let rec " ++ idt a ++ " " ++ args b ++ " = " ++ expr c ++ " in " ++ expr d ++ ")"
-expr (Let NonRec a b c d) =
-      "(let " ++ idt a ++ " " ++ args b ++ " = " ++ expr c ++ " in " ++ expr d ++ ")"
+expr (Let r a b c d) =
+  "(let" ++ rec r ++ " " ++ idt a ++ " " ++ args b ++ " = "
+  ++ expr c ++ " in " ++ expr d ++ ")"
 
 sent :: Sent -> String
 sent (Sent s) = expr s ++ ";;\n"
+sent (Def r a b c) =
+  "let" ++ rec r ++ " " ++ idt a ++ " " ++ args b ++ " = " ++ expr c ++ ";;\n"
 
 prog :: Prog -> String
 prog = concatMap sent

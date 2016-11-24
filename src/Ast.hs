@@ -5,7 +5,7 @@ type Prog = [Sent]
 data IsRec = Rec | NonRec deriving (Show, Eq)
 
 data Sent
-  = Def IsRec [Idt] Expr
+  = Def IsRec Idt [Idt] Expr
   | Sent Expr
   deriving (Show, Eq)
 

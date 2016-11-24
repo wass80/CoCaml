@@ -34,6 +34,9 @@ spec = do
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
   describe "sent" $ do
     testTrans sent "(a b);;\n" (Sent (Apply (i "a") (i "b")))
+  describe "def" $ do
+    testTrans sent "let rec x y = (a b);;\n"
+      (Def Rec (Idt "x") [Idt "y"] (Apply (i "a") (i "b")))
   describe "prog" $ do
     testTrans prog "(a b);;\na;;\n"
       [Sent (Apply (i "a") (i "b")), Sent (i "a")]

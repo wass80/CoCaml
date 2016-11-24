@@ -54,8 +54,16 @@ spec = do
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
   describe "sent" $ do
     testParser sent "a b。" (Sent (Apply (i "a") (i "b")))
+  describe "def" $ do
+    testParser def "定 a b c 為 d、e。"
+      (Def NonRec (Idt "a") [Idt "b", Idt "c"] (Pipe (i "d") (i "e")))
+    testParser def "定 再 a b c 為 d、e。"
+      (Def Rec (Idt "a") [Idt "b", Idt "c"] (Pipe (i "d") (i "e")))
   describe "prog" $ do
     testParser prog "a b。あ。"
       [Sent (Apply (i "a") (i "b")), Sent (i "あ")]
     testParser prog "a b。   "
       [Sent (Apply (i "a") (i "b"))]
+    testParser prog " a b。  定 a b 為 c。 "
+      [Sent (Apply (i "a") (i "b")),
+       Def NonRec (Idt "a") [Idt "b"] (i "c")]
