@@ -1,6 +1,6 @@
 # 孔Caml
 
-[Demo](https://wass80.github.io/CoCaml/docs/)
+[Demo](https://wass80.github.io/CoCaml/demo/)
 
 漢文ベース関数型プログラミング言語です。
 OCamlの構文です。
