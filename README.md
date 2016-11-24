@@ -2,13 +2,23 @@
 
 [https://wass80.github.io/CoCaml/docs/](Demo)
 
+漢文ベース関数型プログラミング言語です。
+OCamlの構文です。
+
+# Interpreter
+
+(TO DO)
+
+# Grammer
+
+[./src/AST.hs](AST + BNF)
+
 # Requirements
 
 * Haskell
 * OCaml
 * Parsec
 * Haste
-* [https://github.com/cmonos/TAKETORI-JS](竹取.js)
 
 # License
 
