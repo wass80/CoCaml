@@ -29,3 +29,6 @@ sent (Sent s) = expr s ++ ";;\n"
 
 prog :: Prog -> String
 prog = concatMap sent
+
+transpile :: Prog -> String
+transpile = prog

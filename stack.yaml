@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-7.7
+resolver: lts-6.14
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -39,7 +39,11 @@ packages:
 - '.'
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
-extra-deps: []
+extra-deps:
+- HTTP-4000.2.23
+- ghc-simple-0.3
+- haste-compiler-0.5.4.2
+- shellmate-0.2.3
 
 # Override default flag values for local packages and extra-deps
 flags: {}

@@ -1,4 +1,3 @@
-%.o: %.ml
-	ocamlfind ocamlopt -package m17n -syntax utf8 $< -o $@
-%.ml: %.kanbun
-	stack exec kanbun < $< > $@
+./build/Main.js: ./app/Main.hs
+	hastec -v $< $(wildcard ./src/*.hs) -o $@
+
