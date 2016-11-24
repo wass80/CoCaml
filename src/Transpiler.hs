@@ -1,11 +1,14 @@
 module Transpiler where
 
 import Ast
-import Data.Char (ord)
+import Data.Char (ord, chr)
 import Data.List (intercalate)
 
 uord :: Char -> String
 uord c = 'u' : (show $ ord c)
+
+uchr :: String -> Char
+uchr ('u' : t) = chr $ read t
 
 idt :: Idt -> String
 idt (Idt idt@(s:_))

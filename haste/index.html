@@ -1,15 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Calc</title>
+  <title>孔Caml</title>
   <script src="../build/Main.js"></script>
+  <link rel="stylesheet" href="../bower_components/taketori-js/taketori.css">
+  <style>
+body {
+  margin: 0;
+  padding: 0;
+}
+.vert {
+  writing-mode: tb-rl;
+  writing-mode : vertical-rl;
+  -ms-writing-mode : vertical-rl;
+  -webkit-writing-mode : vertical-rl;
+}
+.virt {
+  white-space: pre;
+  font-size: 150%;
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+.split {
+  flex-direction: column;
+}
+.grow {
+  flex-grow: 1;
+}
+.mouhitu {
+  font-family: 'KouzanMouhitu';
+}
+.fit {
+    border: none;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+  </style>
 </head>
 <body>
-  <div>
-    <input type="text" name="calcInput" id="calcInput">
+  <div class="container">
+    <div class="split grow">
+      <h1 class="mouhitu">孔Caml</h1>
+      <textarea id="input" contenteditable="true" class="grow fit"
+      placeholder="please write here.">亜。</textarea>
+      <div id="output" class="grow virt"></div>
+      <div id="ast" class=""></div>
+    </div>
+    <div id="preview" class="vert grow virt mouhitu"></div>
   </div>
-  <div id="output"></div>
-  <div id="ast"></div>
+<style>
+@font-face{
+  font-family: 'KouzanMouhitu';
+  src: url('../font/KouzanMouhituFontOTF.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+</style>
 </body>
 </html>
