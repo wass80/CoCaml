@@ -57,3 +57,5 @@ spec = do
   describe "prog" $ do
     testParser prog "a b。あ。"
       [Sent (Apply (i "a") (i "b")), Sent (i "あ")]
+    testParser prog "a b。   "
+      [Sent (Apply (i "a") (i "b"))]

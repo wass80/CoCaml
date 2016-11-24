@@ -54,4 +54,4 @@ sent :: Parser Sent
 sent = Sent <$> expr <* spaces <*  char '。'
 
 prog :: Parser Prog
-prog = many sent
+prog = many (try sent) <* spaces
