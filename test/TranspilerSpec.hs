@@ -32,6 +32,9 @@ spec = do
     testExpr "(let rec a b c = (c d) in (e |> f))"
       (Let Rec (Idt "a") [Idt "b", Idt "c"]
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
+  describe "lif" $ do
+    testExpr "(if a then (b |> c) else d end)"
+      (If (i "a") (Pipe (i "b") (i "c")) (i "d"))
   describe "sent" $ do
     testTrans sent "(a b);;\n" (Sent (Apply (i "a") (i "b")))
   describe "def" $ do

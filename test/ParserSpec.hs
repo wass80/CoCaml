@@ -52,12 +52,15 @@ spec = do
     testParser llet "以再 a b 為 c d 如 e、f"
       (Let Rec (Idt "a") [Idt "b"]
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
+  describe "lif" $ do
+    testParser lif "若あ寧 b、c 無 d "
+      (If (i "あ") (Pipe (i "b") (i "c")) (i "d"))
   describe "sent" $ do
     testParser sent "a b。" (Sent (Apply (i "a") (i "b")))
   describe "def" $ do
-    testParser def "定 a b c 為 d、e。"
+    testParser def " 定 a b c 為 d、e。"
       (Def NonRec (Idt "a") [Idt "b", Idt "c"] (Pipe (i "d") (i "e")))
-    testParser def "定 再 a b c 為 d、e。"
+    testParser def " 定 再 a b c 為 d、e。"
       (Def Rec (Idt "a") [Idt "b", Idt "c"] (Pipe (i "d") (i "e")))
   describe "prog" $ do
     testParser prog "a b。あ。"

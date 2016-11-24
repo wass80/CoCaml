@@ -38,8 +38,18 @@ llet = do
   e <- pipe
   return $ Let r f args val e
 
+lif :: Parser Expr
+lif = do
+  char '若'
+  cond <- pipe
+  char '寧'
+  t <- pipe
+  char '無'
+  f <- pipe
+  return $ If cond t f
+
 atom :: Parser Expr
-atom = llet <|> lidt
+atom = many space *> (llet <|> lif <|> lidt)
 
 apply :: Parser Expr
 apply = foldl1 Apply <$> many atom
