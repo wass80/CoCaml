@@ -18,7 +18,6 @@ body {
 }
 .virt {
   white-space: pre;
-  font-size: 150%;
 }
 .container {
   display: flex;
@@ -32,6 +31,7 @@ body {
 }
 .mouhitu {
   font-family: 'KouzanMouhitu';
+  font-size: 150%;
 }
 .fit {
     border: none;
@@ -46,9 +46,12 @@ body {
   <div class="container">
     <div class="split grow">
       <h1 class="mouhitu">孔Caml</h1>
+      <h2 class="mouhitu">入力</h2>
       <textarea id="input" contenteditable="true" class="grow fit"
       placeholder="please write here.">亜。</textarea>
+      <h2>OCamlコード</h2>
       <div id="output" class="grow virt"></div>
+      <h2>抽象構文木</h2>
       <div id="ast" class=""></div>
     </div>
     <div id="preview" class="vert grow virt mouhitu"></div>
