@@ -9,7 +9,7 @@ OCamlの構文です。
 
 (TO DO)
 
-# Grammer
+# Syntax
 
 [AST + BNF](./src/AST.hs)
 
