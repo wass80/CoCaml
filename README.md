@@ -11,7 +11,7 @@ OCamlの構文です。
 
 # Grammer
 
-[./src/AST.hs](AST + BNF)
+[https://github.com/wass80/CoCaml/blob/master/src/Ast.hs](AST + BNF)
 
 # Requirements
 
