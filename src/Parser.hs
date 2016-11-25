@@ -87,4 +87,4 @@ def = try $ do
   return $ Def r f args val
 
 prog :: Parser Prog
-prog = many (sent <|> def) <* many space
+prog = many (sent <|> def) <* many space <* eof
