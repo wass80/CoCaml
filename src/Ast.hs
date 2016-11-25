@@ -31,7 +31,7 @@ alphas :: [Char]
 alphas = ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "'_()+-="
 
 regchars :: [Char]
-regchars = "　 、。也為如若寧無呼取何也以定「」"
+regchars = "　 、。也為如若寧無呼取所也以定「」"
 {--
 
 <program> = <sentence>+
@@ -48,13 +48,13 @@ regchars = "　 、。也為如若寧無呼取何也以定「」"
   '以' '再'? <idt>+ '為' <pipe> '如' <pipe> |
   '若' <pipe> '寧' <pipe> '無' <pipe> |
   '字' <pipe> |
-  (並 <expr>)+ 空 |
+  ('並' <expr>)+ '空' |
   「 <string> 」|
   <number> |
-  呼 <atom> |
-  次 <expr> |
+  '呼' <atom> |
+  '次' <expr> |
   <idt> |
-  何 <expr> 也
+  '所' <expr> '也'
 
 <idt> ::= <alpha> <char> (- <char>)* | <idt> 之 <idt>
 

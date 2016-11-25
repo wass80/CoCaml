@@ -26,6 +26,9 @@ lidt = LIdt <$> idt
 lstring :: Parser Expr
 lstring = LString <$> (char '「' *> many (noneOf "」") <* char '」')
 
+lparen :: Parser Expr
+lparen = char '所' *> expr <* char '也'
+
 rec :: Parser IsRec
 rec = option NonRec $ (try (many space *> char '再') *> return Rec)
 
@@ -58,7 +61,8 @@ call = do
   return $ Call f
 
 atom :: Parser Expr
-atom = try $ many space *> (call <|> lstring <|> llet <|> lif <|> lidt)
+atom = try $ many space *>
+  (call <|> lstring <|> llet <|> lif <|> lparen <|> lidt)
 
 apply :: Parser Expr
 apply = foldl1 Apply <$> many atom
@@ -67,7 +71,7 @@ pipe :: Parser Expr
 pipe = foldl1 Pipe <$> (apply `sepBy1` char '、')
 
 expr :: Parser Expr
-expr = pipe
+expr = pipe <* many space
 
 sent :: Parser Sent
 sent = Sent <$> (try $ expr <* many space <*  char '。')

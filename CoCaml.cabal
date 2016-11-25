@@ -35,7 +35,7 @@ executable cocaml
     build-depends:     haste-compiler >= 0.5 && < 0.6
   default-language:    Haskell2010
 
-test-suite kanbun-test
+test-suite CoCaml-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
@@ -49,4 +49,4 @@ test-suite kanbun-test
 
 source-repository head
   type:     git
-  location: https://github.com/githubuser/kanbun
+  location: https://github.com/wass80/CoCaml
