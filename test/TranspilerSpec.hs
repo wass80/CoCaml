@@ -35,7 +35,7 @@ spec = do
       (Let Rec (Idt "a") [Idt "b", Idt "c"]
         (Apply (i "c") (i "d")) (Pipe (i "e") (i "f")))
   describe "lif" $ do
-    testExpr "(if a then (b |> c) else d end)"
+    testExpr "(if a then (b |> c) else d)"
       (If (i "a") (Pipe (i "b") (i "c")) (i "d"))
   describe "call" $ do
     testExpr "(a())" (Call (i "a"))

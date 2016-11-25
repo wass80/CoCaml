@@ -21,6 +21,7 @@ a {
 }
 .virt {
   white-space: pre;
+  word-break: break-all;
 }
 .container {
   display: flex;
@@ -28,6 +29,10 @@ a {
 }
 .split {
   flex-direction: column;
+}
+.half {
+  width: 50vw;
+  min-width: 400px;
 }
 .grow {
   flex-grow: 1;
@@ -47,7 +52,7 @@ a {
 </head>
 <body>
   <div class="container">
-    <div class="split grow">
+    <div class="split half">
       <a href=".."><h1 class="mouhitu">孔Caml</h1></a>
       <h2 class="mouhitu">入力</h2>
       <textarea id="input" contenteditable="true" class="grow fit"
@@ -57,22 +62,25 @@ a {
 定加為(+)。
 定減為(-)。
 定等為(==)。
-定改為print_newline。
+定零為0。
+定一為1。
+定改-行為print_newline。
 定読為read_line。
-定見為read_int。
+定読-数為read_int。
 
-曰「にーはお」。呼改。
-定再 階数 為
-  若 等数0
-    寧 0
-    無 加数 何 減数1、階 也。亜。
+曰「にーはお、世界」。呼改-行。
+定再 階-加 数 為
+  若 等数零
+    寧 零
+    無 加数 所 減数一、階-加 也。
+呼読-数、階-加、名、曰。呼改-行。
     </textarea>
       <h2>OCamlコード</h2>
-      <div id="output" class="grow virt"></div>
+      <p id="output" class="grow virt"></p>
       <h2>抽象構文木</h2>
-      <div id="ast" class=""></div>
+      <p id="ast" class=""></p>
     </div>
-    <div id="preview" class="vert grow virt mouhitu"></div>
+    <p id="preview" class="vert grow virt mouhitu"></p>
   </div>
 <style>
 @font-face{

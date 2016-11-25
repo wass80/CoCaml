@@ -30,7 +30,7 @@ expr (Pipe a b) = "(" ++ expr a ++ " |> " ++ expr b ++ ")"
 expr (Let r a b c d) =
   "(let" ++ rec r ++ " " ++ idt a ++ " " ++ args b ++ " = "
   ++ expr c ++ " in " ++ expr d ++ ")"
-expr (If c t f) = "(if " ++ expr c ++ " then " ++ expr t ++ " else " ++ expr f ++ " end)"
+expr (If c t f) = "(if " ++ expr c ++ " then " ++ expr t ++ " else " ++ expr f ++ ")"
 expr (Call f) = "(" ++ expr f ++ "())"
 
 sent :: Sent -> String

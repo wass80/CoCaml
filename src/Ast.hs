@@ -28,7 +28,7 @@ data Expr
 data Idt = Idt String deriving (Show, Eq)
 
 alphas :: [Char]
-alphas = ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "'_()+-="
+alphas = ['0'..'9'] ++ ['a'..'z'] ++ ['A'..'Z'] ++ "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 
 regchars :: [Char]
 regchars = "　 、。也為如若寧無呼取所也以定「」"
