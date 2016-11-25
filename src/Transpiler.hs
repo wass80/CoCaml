@@ -31,6 +31,7 @@ expr (Let r a b c d) =
   "(let" ++ rec r ++ " " ++ idt a ++ " " ++ args b ++ " = "
   ++ expr c ++ " in " ++ expr d ++ ")"
 expr (If c t f) = "(if " ++ expr c ++ " then " ++ expr t ++ " else " ++ expr f ++ " end)"
+expr (Call f) = "(" ++ expr f ++ "())"
 
 sent :: Sent -> String
 sent (Sent s) = expr s ++ ";;\n"

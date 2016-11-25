@@ -37,6 +37,8 @@ spec = do
   describe "lif" $ do
     testExpr "(if a then (b |> c) else d end)"
       (If (i "a") (Pipe (i "b") (i "c")) (i "d"))
+  describe "call" $ do
+    testExpr "(a())" (Call (i "a"))
   describe "sent" $ do
     testTrans sent "(a b);;\n" (Sent (Apply (i "a") (i "b")))
   describe "def" $ do

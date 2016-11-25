@@ -59,6 +59,9 @@ spec = do
   describe "lif" $ do
     testParser lif "若あ寧 b、c 無 d "
       (If (i "あ") (Pipe (i "b") (i "c")) (i "d"))
+  describe "call" $ do
+    testParser pipe "呼a、呼i "
+      (Pipe (Call (i "a")) (Call (i "i")))
   describe "sent" $ do
     testParser sent "a b。" (Sent (Apply (i "a") (i "b")))
   describe "def" $ do

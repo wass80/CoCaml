@@ -51,7 +51,7 @@ regchars = "　 、。也為如若寧無呼取何也以定「」"
   (並 <expr>)+ 空 |
   「 <string> 」|
   <number> |
-  呼 <expr> |
+  呼 <atom> |
   次 <expr> |
   <idt> |
   何 <expr> 也

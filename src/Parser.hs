@@ -51,8 +51,14 @@ lif = do
   f <- pipe
   return $ If cond t f
 
+call :: Parser Expr
+call = do
+  char '呼'
+  f <- atom
+  return $ Call f
+
 atom :: Parser Expr
-atom = try $ many space *> (lstring <|> llet <|> lif <|> lidt)
+atom = try $ many space *> (call <|> lstring <|> llet <|> lif <|> lidt)
 
 apply :: Parser Expr
 apply = foldl1 Apply <$> many atom
