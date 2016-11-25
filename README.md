@@ -11,7 +11,7 @@ OCamlの構文です。
 
 # Syntax
 
-[AST + BNF](./src/AST.hs)
+[AST + BNF](./src/Ast.hs)
 
 # Requirements
 
