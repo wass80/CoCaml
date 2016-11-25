@@ -24,6 +24,7 @@ rec NonRec = ""
 
 expr :: Expr -> String
 expr (LIdt i) = idt i
+expr (LString i) = "\"" ++ i ++ "\""
 expr (Apply f a) = "(" ++ expr f ++ " " ++ expr a ++ ")"
 expr (Pipe a b) = "(" ++ expr a ++ " |> " ++ expr b ++ ")"
 expr (Let r a b c d) =

@@ -46,6 +46,10 @@ spec = do
       (Pipe (i "a") (Apply (i "f") (i "b")))
   describe "lidt" $ do
     testParser lidt " 文字 " (i "文")
+  describe "lstring" $ do
+    testParser lstring "「文字 a」 " (LString "文字 a")
+    testParser apply "f 「a」 「b」 "
+      (Apply (Apply (i "f") (LString "a")) (LString "b"))
   describe "llet" $ do
     testParser llet "以 a b 為 c 如 d"
       (Let NonRec (Idt "a") [Idt "b"] (i "c") (i "d"))

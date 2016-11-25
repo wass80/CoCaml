@@ -12,16 +12,19 @@ parse :: String -> Either ParseError Prog
 parse program = Text.Parsec.parse prog "" program
 
 tokenList :: Parser String
-tokenList = (spaces *> noneOf regchars <* spaces )`sepBy1` char '-'
+tokenList = (many space *> noneOf regchars <* many space )`sepBy1` char '-'
 
 token :: Parser String
-token = spaces *>  (many1 (oneOf alphas) <|> tokenList) <* spaces
+token = many space *>  (many1 (oneOf alphas) <|> tokenList) <* many space
 
 idt :: Parser Idt
 idt = Idt <$> token
 
 lidt :: Parser Expr
 lidt = LIdt <$> idt
+
+lstring :: Parser Expr
+lstring = LString <$> (char '「' *> many (noneOf "」") <* char '」')
 
 rec :: Parser IsRec
 rec = option NonRec $ (try (many space *> char '再') *> return Rec)
@@ -49,22 +52,22 @@ lif = do
   return $ If cond t f
 
 atom :: Parser Expr
-atom = many space *> (llet <|> lif <|> lidt)
+atom = try $ many space *> (lstring <|> llet <|> lif <|> lidt)
 
 apply :: Parser Expr
 apply = foldl1 Apply <$> many atom
 
 pipe :: Parser Expr
-pipe = foldl1 Pipe <$> apply `sepBy1` char '、'
+pipe = foldl1 Pipe <$> (apply `sepBy1` char '、')
 
 expr :: Parser Expr
 expr = pipe
 
 sent :: Parser Sent
-sent = Sent <$> expr <* spaces <*  char '。'
+sent = Sent <$> (try $ expr <* many space <*  char '。')
 
 def :: Parser Sent
-def = do
+def = try $ do
   many space
   char '定'
   r <- rec
@@ -78,4 +81,4 @@ def = do
   return $ Def r f args val
 
 prog :: Parser Prog
-prog = many (try sent <|> try def) <* spaces
+prog = many (sent <|> def) <* many space

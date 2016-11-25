@@ -26,6 +26,8 @@ spec = do
     testExpr "u25991" (i "文")
     testExpr "u25991u23383" (i "文字")
     testExpr "aiu" (i "aiu")
+  describe "lstring" $ do
+    testExpr "\"文字\"" (LString "文字")
   describe "llet" $ do
     testExpr "(let a b = c in d)"
       (Let NonRec (Idt "a") [Idt "b"] (i "c") (i "d"))
