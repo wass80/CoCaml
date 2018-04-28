@@ -2,6 +2,12 @@
 
 [Demo](https://wass80.github.io/CoCaml/demo/)
 
+它是一種基於中文的函數式編程語言。
+OCaml的語法。
+
+它是一种基于中文的函数式编程语言。
+OCaml的语法。
+
 漢文ベース関数型プログラミング言語です。
 OCamlの構文です。
 
